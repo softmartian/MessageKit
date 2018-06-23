@@ -67,8 +67,8 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
 
     internal var messageCollectionViewBottomInset: CGFloat = 0 {
         didSet {
-            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset
-            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset
+            messagesCollectionView.contentInset.bottom = messageCollectionViewBottomInset + messageInputBar.frame.height
+            messagesCollectionView.scrollIndicatorInsets.bottom = messageCollectionViewBottomInset + messageInputBar.frame.height
         }
     }
 
@@ -96,6 +96,7 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     open override func viewDidLayoutSubviews() {
         // Hack to prevent animation of the contentInset after viewDidAppear
+        messageCollectionViewBottomInset = 0
         if isFirstLayout {
             defer { isFirstLayout = false }
             addKeyboardObservers()
@@ -187,6 +188,10 @@ UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
             return cell
         case .location:
             let cell = messagesCollectionView.dequeueReusableCell(LocationMessageCell.self, for: indexPath)
+            cell.configure(with: message, at: indexPath, and: messagesCollectionView)
+            return cell
+        case .view:
+            let cell = messagesCollectionView.dequeueReusableCell(ViewMessageCell.self, for: indexPath)
             cell.configure(with: message, at: indexPath, and: messagesCollectionView)
             return cell
         case .custom:
