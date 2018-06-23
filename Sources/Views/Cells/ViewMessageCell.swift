@@ -34,8 +34,8 @@ open class ViewMessageCell: MessageContentCell {
     }
     
     open override func configure(with message: MessageType, at indexPath: IndexPath, and messagesCollectionView: MessagesCollectionView) {
-        
-        guard let displayDelegate = messagesCollectionView.messagesDisplayDelegate else {
+        super.configure(with: message, at: indexPath, and: messagesCollectionView)
+        guard let _ = messagesCollectionView.messagesDisplayDelegate else {
             fatalError(MessageKitError.nilMessagesDisplayDelegate)
         }
          guard case let .view(view) = message.kind else { fatalError("") }

@@ -27,7 +27,7 @@ import UIKit
 /// A subclass of `UICollectionViewCell` to be used inside of a `MessagesCollectionView`.
 open class MessageCollectionViewCell: UICollectionViewCell {
 
-    var message: MessageType?
+   open var message: MessageType?
     // MARK: - Initializers
 
     public override init(frame: CGRect) {
